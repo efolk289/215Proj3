@@ -28,4 +28,10 @@ public class ContactEditingDlg extends JDialog{
 		add(info);
 		add(info2);
 	}
+	
+	ContactEditingDlg(Contact c){
+		this();
+		
+		//populate 
+	}
 }

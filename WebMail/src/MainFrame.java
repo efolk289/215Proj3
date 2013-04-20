@@ -4,11 +4,14 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.event.MouseListener;
+//import java.util.Vector;
 import java.util.Vector;
 
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame implements ActionListener {
 
 	JMenuBar menubar;
 	JMenu fileMenu;
@@ -47,10 +50,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(1000,800));
 		//setSize(new Dimension(100,100));
-				
-		//get content pane
-		//Container pane = getContentPane();
-		//pane.setLayout(new BorderLayout());
 		
 		createMenus();
 		
@@ -91,6 +90,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		confiMenu = new JMenu("Configuration");
 		confiMenu.setBackground(Color.GREEN);
 		confiConfigure = new JMenuItem("Configure");
+		confiConfigure.addActionListener(this);
+		
 		confiMenu.add(confiConfigure);
 		
 		//Help
@@ -137,16 +138,17 @@ public class MainFrame extends JFrame implements ActionListener{
 				System.exit(EXIT_ON_CLOSE);
 			}
 		}
+		
+		else if (arg0.getSource() == confiConfigure){
+			new ConfigurationDlg();
+		}
+		
 	}
 
 	
 	public void createFrame(TableModel CTM){
 		//TableModel ContactModel = new TableModel();
-		DataStore DS = DataStore.getInstance();
-		Vector<Contact> CV = DS.getContacts();
-		//Contact con = new Contact("fir1", "las1", "addr1", "phone1", "em1");
-		//CV.add(con);
-		//DS.a
+		
 		
 		//JTable mainContacts = new JTable(CV, DS.ColNames);
 		JTable mainContacts = new JTable(CTM);
@@ -182,6 +184,22 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		pane.setLayout(new BorderLayout());
 		
+		mainContacts.addMouseListener(new MouseAdapter() {
+			   public void mouseClicked(MouseEvent e) {
+			      if (e.getClickCount() == 2) {
+			         JTable target = (JTable)e.getSource();
+			         int row = target.getSelectedRow();
+			         
+			         DataStore DS = DataStore.getInstance();
+			         Vector<Contact> temp = DS.getContacts();
+			         new EmailTransmissionDlg(temp.elementAt(row));
+			         }
+			   }
+			});
+		
+		
+		
+		
 		JPanel inner = new JPanel();
 	    inner.setLayout(new GridLayout(1, 3));
 	    inner.add(mainAdd);
@@ -196,6 +214,9 @@ public class MainFrame extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		MainFrame myFrame = new MainFrame("TigerMail v1");
 		myFrame.setVisible(true);
+
 	}
+
+	
 	
 }

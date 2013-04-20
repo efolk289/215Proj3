@@ -11,7 +11,7 @@ public class Contact implements Serializable {
 	
 	private String fName;
 	private String lName;
-	private String address;
+	private String address;  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
 	private String phone;
 	private String email;
 	

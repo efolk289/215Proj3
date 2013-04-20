@@ -10,6 +10,10 @@ public class ConfigurationDlg extends JDialog{
 	
 	ConfigurationDlg(){
 		
+		setVisible(true);
+		setModal(true);
+		setSize(new Dimension(500,400));
+		setBackground(Color.green);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
