@@ -29,6 +29,12 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	JButton CEDSave;
 	JButton CEDCancel;
 	
+	String tf;
+	String tl;
+	String ta;
+	String tp;
+	String te;
+	
 	
 	ContactEditingDlg(){
 		setVisible(true);
@@ -64,16 +70,18 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 
 		Container pane = getContentPane();
 		setLayout(new BorderLayout());
+		JLabel top = new JLabel("Please press enter after entering text in each field");
+		pane.add(top, BorderLayout.NORTH);
 		left = new JPanel();
 		right = new JPanel();
 		left.setLayout(new GridLayout(5,1));
 		right.setLayout(new GridLayout(5,1));
 		
-		JLabel fNamePr = new JLabel("First Name:", JLabel.CENTER);
-		JLabel lNamePr = new JLabel("Last Name:", JLabel.CENTER);
-		JLabel addPr = new JLabel("Address:", JLabel.CENTER);
-		JLabel phonePr = new JLabel("Phone number:", JLabel.CENTER);
-		JLabel emailPr = new JLabel("Email address:", JLabel.CENTER);
+		fNamePr = new JLabel("First Name:", JLabel.CENTER);
+		lNamePr = new JLabel("Last Name:", JLabel.CENTER);
+		addPr = new JLabel("Address:", JLabel.CENTER);
+		phonePr = new JLabel("Phone number:", JLabel.CENTER);
+		emailPr = new JLabel("Email address:", JLabel.CENTER);
 		
 		//fName.setHorizontal
 		
@@ -85,11 +93,18 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 				
 		pane.add(left, BorderLayout.WEST);
 		
-		JTextField fName = new JTextField();
-		JTextField lName= new JTextField();
-		JTextField address= new JTextField();  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
-		JTextField phone= new JTextField();
-		JTextField email= new JTextField();
+		fName = new JTextField();
+		lName= new JTextField();
+		address= new JTextField();  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
+		phone= new JTextField();
+		email= new JTextField();
+		
+		fName.addActionListener(this);
+		lName.addActionListener(this);
+		address.addActionListener(this);
+		phone.addActionListener(this);
+		email.addActionListener(this);
+		
 		
 		right.add(fName);
 		right.add(lName);
@@ -126,8 +141,7 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		if(arg0.getSource() == CEDSave){
 			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
 			if(temp ==JOptionPane.YES_OPTION){
-				Contact toSave = new Contact(fName.getText(), lName.getText(), 
-						address.getText(), phone.getText(), email.getText());
+				Contact toSave = new Contact(tf, tl, ta, tp, te);
 				System.out.println(fName.getText());
 				DataStore DS = DataStore.getInstance();
 				DS.addContact(toSave);
@@ -147,6 +161,28 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 				dispose();
 			}
 		}
+		
+		else if (arg0.getSource() == fName){
+			tf = new String(fName.getText());
+		}
+		
+		else if (arg0.getSource() == lName){
+			tl = new String(lName.getText());
+		}
+		
+		else if (arg0.getSource() == address){
+			ta = new String(address.getText());
+		}
+		
+		else if (arg0.getSource() == phone){
+			tp = new String(phone.getText());
+		}
+		
+		else if (arg0.getSource() == email){
+			te = new String(email.getText());
+		}
+		
+
 		
 	}
 }
