@@ -16,7 +16,7 @@ public class EmailTransmissionDlg extends JDialog{
 		setVisible(true);
 		setModal(true);
 		setSize(new Dimension(500,400));
-		setBackground(Color.blue);
+		setBackground(Color.black);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JPanel info = new JPanel();

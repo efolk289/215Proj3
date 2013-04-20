@@ -128,6 +128,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			System.out.println("Help Dialog Closed.");			
 		}
 		
+		else if (arg0.getSource() == mainAdd){
+			new ContactEditingDlg();
+		}
+		
 		else if (arg0.getSource() == mainEdit){
 			new ContactEditingDlg();
 		}
