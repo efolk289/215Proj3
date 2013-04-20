@@ -1,6 +1,7 @@
 
 
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import java.awt.*;
@@ -27,6 +28,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	JMenuItem confiConfigure;
 	JMenu helpMenu;
 	JMenuItem helpAbout;
+	
+	ListSelectionModel LSM;
+	
+	JTable mainContacts;
 	
 	JButton mainAdd;
 	JButton mainEdit;
@@ -133,14 +138,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		else if (arg0.getSource() == mainEdit){
-			
+			new ContactEditingDlg();		
+		}
 		
+		else if (arg0.getSource() == mainDel){
+			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the contact?", "Confirm Delete", 2);
+			if(temp ==JOptionPane.YES_OPTION){
+				System.exit(EXIT_ON_CLOSE);
+			}
 		}
 		
 		else if (arg0.getSource() == fileExit){
 			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
 			if(temp ==JOptionPane.YES_OPTION){
-				System.exit(EXIT_ON_CLOSE);
+				//delete
 			}
 		}
 		
@@ -156,12 +167,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		
 		//JTable mainContacts = new JTable(CV, DS.ColNames);
-		JTable mainContacts = new JTable(CTM);
+		mainContacts = new JTable(CTM);
 		mainContacts.setGridColor(Color.black);
+		mainContacts.setRowSelectionAllowed(true);
 		
-		//TableColumnModel cols = mainContacts.getColumnModel();
-		//JTableHeader JTH = new JTableHeader(cols);
-	
+		
 		
 		((ContactTableModel) CTM).addContact(new Contact("fir1", "las1", "addr1", "phone1", "em1"));
 		
@@ -204,15 +214,33 @@ public class MainFrame extends JFrame implements ActionListener {
 			});
 		
 		
-		
+		LSM = mainContacts.getSelectionModel();
+		LSM.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		LSM.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                //Ignore extra messages.                
+            	if (e.getValueIsAdjusting()) {
+            		return;
+            	}
+            	mainEdit.setEnabled(true);
+            	mainDel.setEnabled(true);
+                ListSelectionModel event = (ListSelectionModel)e.getSource();
+                
+                int selectedRow = event.getMinSelectionIndex();
+                System.out.println("Row " + selectedRow + " is now selected.");
+            }  
+            });				
+
 		
 		JPanel inner = new JPanel();
 	    inner.setLayout(new GridLayout(1, 3));
 	    inner.add(mainAdd);
 	    inner.add(mainEdit);
 	    inner.add(mainDel);
-	    pane.add(inner, BorderLayout.SOUTH);
-		
+	    
+	    
+	    
+	    pane.add(inner, BorderLayout.SOUTH);		
 		pane.add(scrollPane, BorderLayout.CENTER);
 		
 
