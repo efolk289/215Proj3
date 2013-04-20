@@ -31,7 +31,7 @@ public class ContactEditingDlg extends JDialog{
 	ContactEditingDlg(){
 		setVisible(true);
 		setModal(true);
-		setSize(new Dimension(500,400));
+		setSize(new Dimension(600,400));
 		setTitle("Create or Edit Contacts");
 	/*	setBackground(Color.darkGray);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -75,11 +75,13 @@ public class ContactEditingDlg extends JDialog{
 		left.setLayout(new GridLayout(5,1));
 		right.setLayout(new GridLayout(5,1));
 		
-		JLabel fNamePr = new JLabel("First Name:");
-		JLabel lNamePr = new JLabel("Last Name:");
-		JLabel addPr = new JLabel("Address:");
-		JLabel phonePr = new JLabel("Phone number:");
-		JLabel emailPr = new JLabel("Email address:");
+		JLabel fNamePr = new JLabel("First Name:", JLabel.CENTER);
+		JLabel lNamePr = new JLabel("Last Name:", JLabel.CENTER);
+		JLabel addPr = new JLabel("Address:", JLabel.CENTER);
+		JLabel phonePr = new JLabel("Phone \nnumber:", JLabel.CENTER);
+		JLabel emailPr = new JLabel("Email address:", JLabel.CENTER);
+		
+		//fName.setHorizontal
 		
 		left.add(fNamePr);
 		left.add(lNamePr);		
@@ -100,6 +102,8 @@ public class ContactEditingDlg extends JDialog{
 		right.add(address);
 		right.add(phone);
 		right.add(email);
+		
+		fNamePr.setLabelFor(fName);
 		
 		pane.add(right,BorderLayout.CENTER);
 		
