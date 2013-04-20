@@ -133,7 +133,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		else if (arg0.getSource() == mainEdit){
-			new ContactEditingDlg();
+			ContactEditingDlg CED = new ContactEditingDlg();
+		
 		}
 		
 		else if (arg0.getSource() == fileExit){

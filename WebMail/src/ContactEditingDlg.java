@@ -67,10 +67,13 @@ public class ContactEditingDlg extends JDialog{
 	}
 	
 	void makeFields(){
+
 		Container pane = getContentPane();
 		setLayout(new BorderLayout());
-		left.setLayout(new GridLayout(3,1));
-		right.setLayout(new GridLayout(3,1));
+		left = new JPanel();
+		right = new JPanel();
+		left.setLayout(new GridLayout(5,1));
+		right.setLayout(new GridLayout(5,1));
 		
 		JLabel fNamePr = new JLabel("First Name:");
 		JLabel lNamePr = new JLabel("Last Name:");
@@ -78,12 +81,27 @@ public class ContactEditingDlg extends JDialog{
 		JLabel phonePr = new JLabel("Phone number:");
 		JLabel emailPr = new JLabel("Email address:");
 		
-		left.add(emailPr);
-		left.add(phonePr);
-		left.add(addPr);
-		left.add(lNamePr);
 		left.add(fNamePr);
+		left.add(lNamePr);		
+		left.add(addPr);
+		left.add(phonePr);
+		left.add(emailPr);
+				
+		pane.add(left, BorderLayout.WEST);
 		
-		pane.add(left, BorderLayout.CENTER);
+		JTextField fName = new JTextField();
+		JTextField lName= new JTextField();
+		JTextField address= new JTextField();  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
+		JTextField phone= new JTextField();
+		JTextField email= new JTextField();
+		
+		right.add(fName);
+		right.add(lName);
+		right.add(address);
+		right.add(phone);
+		right.add(email);
+		
+		pane.add(right,BorderLayout.CENTER);
+		
 	}
 }
