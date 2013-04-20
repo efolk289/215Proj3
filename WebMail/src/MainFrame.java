@@ -134,7 +134,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		else if (arg0.getSource() == mainEdit){
 			ContactEditingDlg CED = new ContactEditingDlg();
-		
+			CED.setModal(true);
 		}
 		
 		else if (arg0.getSource() == fileExit){

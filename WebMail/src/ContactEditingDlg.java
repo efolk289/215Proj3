@@ -72,8 +72,8 @@ public class ContactEditingDlg extends JDialog{
 		setLayout(new BorderLayout());
 		left = new JPanel();
 		right = new JPanel();
-		left.setLayout(new GridLayout(5,1));
-		right.setLayout(new GridLayout(5,1));
+		left.setLayout(new GridLayout(5,2));
+		right.setLayout(new GridLayout(5,2));
 		
 		JLabel fNamePr = new JLabel("First Name:", JLabel.CENTER);
 		JLabel lNamePr = new JLabel("Last Name:", JLabel.CENTER);
@@ -83,29 +83,41 @@ public class ContactEditingDlg extends JDialog{
 		
 		//fName.setHorizontal
 		
-		left.add(fNamePr);
+		/*left.add(fNamePr);
 		left.add(lNamePr);		
 		left.add(addPr);
 		left.add(phonePr);
 		left.add(emailPr);
 				
 		pane.add(left, BorderLayout.WEST);
-		
+		*/
 		JTextField fName = new JTextField();
 		JTextField lName= new JTextField();
 		JTextField address= new JTextField();  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
 		JTextField phone= new JTextField();
 		JTextField email= new JTextField();
 		
+		left.add(fNamePr);
+		left.add(fName);
+		left.add(lNamePr);
+		left.add(lName);
+		left.add(addPr);
+		left.add(address);
+		left.add(phonePr);
+		left.add(phone);
+		left.add(emailPr);
+		left.add(email);
+		
+	/*	
 		right.add(fName);
 		right.add(lName);
 		right.add(address);
 		right.add(phone);
 		right.add(email);
 		
-		fNamePr.setLabelFor(fName);
-		
-		pane.add(right,BorderLayout.CENTER);
+		fName.setPreferredSize(new Dimension(200, 40));
+		*/
+		pane.add(left,BorderLayout.CENTER);
 		
 	}
 }
