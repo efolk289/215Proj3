@@ -55,6 +55,8 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		phone = new JTextField(c.getPhone());
 		email = new JTextField(c.getEmail());
 		
+		fName.setText(c.getfName());
+		
 		makeFields();
 	}
 	
@@ -122,6 +124,20 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if(arg0.getSource() == CEDSave){
+			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
+			if(temp ==JOptionPane.YES_OPTION){
+				Contact toSave = new Contact(fName.getText(), lName.getText(), 
+						address.getText(), phone.getText(), email.getText());
+				System.out.println(fName.getText());
+				DataStore DS = DataStore.getInstance();
+				DS.addContact(toSave);
+				dispose();
+			}
+			else if(temp ==JOptionPane.NO_OPTION){
+				//dispose();
+				setVisible(false);
+			}
+			
 			
 		}
 		

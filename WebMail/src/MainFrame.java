@@ -137,10 +137,16 @@ public class MainFrame extends JFrame implements ActionListener {
 			new ContactEditingDlg();
 		}
 		
-		else if (arg0.getSource() == mainEdit){
-			new ContactEditingDlg();		
+		/*else if (arg0.getSource() == mainEdit){
+			
+            
+            int row = event.getMinSelectionIndex();
+           
+            DataStore DS = DataStore.getInstance();
+	        Vector<Contact> temp = DS.getContacts();
+	        new ContactEditingDlg(temp.elementAt(row)); 
 		}
-		
+		*/
 		else if (arg0.getSource() == mainDel){
 			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the contact?", "Confirm Delete", 2);
 			if(temp ==JOptionPane.YES_OPTION){
@@ -207,8 +213,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			         int row = target.getSelectedRow();
 			         
 			         DataStore DS = DataStore.getInstance();
-			         Vector<Contact> temp = DS.getContacts();
-			         new EmailTransmissionDlg(temp.elementAt(row));
+				     new ContactEditingDlg(DS.getContactAt(row));
 			         }
 			   }
 			});
@@ -224,10 +229,21 @@ public class MainFrame extends JFrame implements ActionListener {
             	}
             	mainEdit.setEnabled(true);
             	mainDel.setEnabled(true);
-                ListSelectionModel event = (ListSelectionModel)e.getSource();
-                
-                int selectedRow = event.getMinSelectionIndex();
-                System.out.println("Row " + selectedRow + " is now selected.");
+            final ListSelectionModel event = (ListSelectionModel)e.getSource();
+            	
+            	mainEdit.addActionListener(new ActionListener(){
+            		
+					public void actionPerformed(ActionEvent e2) {
+						if (e2.getSource() == mainEdit){				            
+				            int row = event.getMinSelectionIndex();
+				           
+				            DataStore DS = DataStore.getInstance();
+					        new ContactEditingDlg(DS.getContactAt(row)); 
+						}
+						
+					}
+            		
+            	});
             }  
             });				
 

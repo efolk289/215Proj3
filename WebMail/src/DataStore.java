@@ -45,6 +45,14 @@ public class DataStore {
 	public Configuration getConfig() {
 		return config;
 	}
+	
+	public Contact getContactAt(int at){
+		return contacts.elementAt(at);
+	}
+	
+	public void addContact(Contact toSave){
+		contacts.add(toSave);
+	}
 
 	public void setConfig(Configuration config) {
 		this.config = config;
