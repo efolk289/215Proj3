@@ -133,7 +133,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		else if (arg0.getSource() == mainEdit){
-			ContactEditingDlg CED = new ContactEditingDlg();
+			
 		
 		}
 		
@@ -185,8 +185,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		mainAdd.addActionListener(this);
 		mainEdit.addActionListener(this);
+		mainEdit.setEnabled(false);
 		mainDel.addActionListener(this);
-		
+		mainDel.setEnabled(false);
 		pane.setLayout(new BorderLayout());
 		
 		mainContacts.addMouseListener(new MouseAdapter() {

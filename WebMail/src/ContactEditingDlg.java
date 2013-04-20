@@ -1,8 +1,10 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ContactEditingDlg extends JDialog{
+public class ContactEditingDlg extends JDialog implements ActionListener{
 
 	/**
 	 * 
@@ -33,17 +35,7 @@ public class ContactEditingDlg extends JDialog{
 		setModal(true);
 		setSize(new Dimension(600,400));
 		setTitle("Create or Edit Contacts");
-	/*	setBackground(Color.darkGray);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JPanel info = new JPanel();
-		info.setForeground(Color.white);
-		info.add(new Label("A 215 email client"));
-		JPanel info2 = new JPanel();
-		info2.add(new Label("asdf"));
-		add(info);
-		add(info2);
-	*/	
 		//initialize
 		fName = new JTextField();
 		lName = new JTextField();
@@ -78,7 +70,7 @@ public class ContactEditingDlg extends JDialog{
 		JLabel fNamePr = new JLabel("First Name:", JLabel.CENTER);
 		JLabel lNamePr = new JLabel("Last Name:", JLabel.CENTER);
 		JLabel addPr = new JLabel("Address:", JLabel.CENTER);
-		JLabel phonePr = new JLabel("Phone \nnumber:", JLabel.CENTER);
+		JLabel phonePr = new JLabel("Phone number:", JLabel.CENTER);
 		JLabel emailPr = new JLabel("Email address:", JLabel.CENTER);
 		
 		//fName.setHorizontal
@@ -106,6 +98,39 @@ public class ContactEditingDlg extends JDialog{
 		fNamePr.setLabelFor(fName);
 		
 		pane.add(right,BorderLayout.CENTER);
+		
+		makeButtons(pane);
+		
+	}
+	
+	void makeButtons(Container pane){
+		CEDSave = new JButton("Save");
+		CEDCancel = new JButton("Cancel");		
+		
+		CEDSave.addActionListener(this);
+		CEDCancel.addActionListener(this);
+		
+		JPanel inner = new JPanel();
+	    inner.setLayout(new GridLayout(1,2));
+	    inner.add(CEDSave);
+	    inner.add(CEDCancel);
+	    
+	    pane.add(inner, BorderLayout.SOUTH);
+	    
+	}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		
+		if(arg0.getSource() == CEDSave){
+			
+		}
+		
+		else if (arg0.getSource() == CEDCancel){
+			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
+			if(temp ==JOptionPane.YES_OPTION){
+				dispose();
+			}
+		}
 		
 	}
 }
