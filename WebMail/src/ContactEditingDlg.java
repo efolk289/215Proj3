@@ -24,7 +24,7 @@ public class ContactEditingDlg extends JDialog {
 	JLabel phonePr;
 	JLabel emailPr;
 	
-	JTextField fName = new JTextField("asdf");
+	JTextField fName;
 	JTextField lName;
 	JTextField address;  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
 	JTextField phone;
@@ -56,28 +56,32 @@ public class ContactEditingDlg extends JDialog {
 		phone = new JTextField();
 		email = new JTextField();
 		makeFields(null);
-		setVisible(true);
+		
+		//setVisible(true);
+		
 	}
 	
 	ContactEditingDlg(Contact c){
-		setModal(true);
-		setSize(new Dimension(600,400));
-		setTitle("Create or Edit Contacts");
+		this();
 		
 		//populate 
-		JTextField fName = new JTextField("first name");
+		/*fName = new JTextField(c.getfName());
 		lName = new JTextField(c.getlName());
 		address = new JTextField(c.getAddress());
 		phone = new JTextField(c.getPhone());
 		email = new JTextField(c.getEmail());
 		
-		fName.setText(c.getfName());
-		
 		fName.setBackground(Color.DARK_GRAY);
-		
+	*/
+
+		fName.setText(c.getfName());
+		lName.setText(c.getlName());
+		address.setText(c.getAddress());
+		phone.setText(c.getPhone());
+		email.setText(c.getEmail());
 		makeFields(c);
 		
-		setVisible(true);
+		//setVisible(true);
 	}
 	
 	void makeFields(Contact c){
@@ -85,10 +89,7 @@ public class ContactEditingDlg extends JDialog {
 		fName.setForeground(Color.black);
 
 		Container pane = getContentPane();
-		setLayout(new BorderLayout());
-		//JLabel top = new JLabel("Please press enter after entering text in each field",  JLabel.CENTER);
 
-		//pane.add(top, BorderLayout.NORTH);
 		left = new JPanel();
 		right = new JPanel();
 		left.setLayout(new GridLayout(5,1));
@@ -210,7 +211,7 @@ public class ContactEditingDlg extends JDialog {
 	    
 	    pane.add(inner, BorderLayout.SOUTH);
 	    
-	    
+	    setVisible(true);
 	    
 	}
 	
