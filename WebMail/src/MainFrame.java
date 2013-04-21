@@ -70,6 +70,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void createMenus(){
+
+		UIManager.put("menubar.selectionBackground", Color.black);
+		UIManager.put("Menu.selectionForeground",Color.white);
+		
 		//create top menu
 		menubar = new JMenuBar();
 		menubar.setBackground(Color.GREEN);
@@ -85,6 +89,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		fileMenu.add(fileNew);		
 		fileExit = new JMenuItem("Exit");
 		fileMenu.add(fileExit);
+		
+	
 		
 		new1.addActionListener(this);
 		new2.addActionListener(this);
