@@ -68,6 +68,8 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		
 		fName.setText(c.getfName());
 		
+		fName.setBackground(Color.DARK_GRAY);
+		
 		makeFields();
 	}
 	

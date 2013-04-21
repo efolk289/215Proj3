@@ -17,7 +17,7 @@ public class SystemInformationDlg extends JDialog{
 		setVisible(true);
 		setModal(true);
 		setSize(new Dimension(500,400));
-		setBackground(Color.white);
+		setBackground(Color.darkGray);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JPanel info = new JPanel();
