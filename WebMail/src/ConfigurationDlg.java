@@ -72,7 +72,7 @@ public class ConfigurationDlg extends JDialog{
 				if(!tp.getText().contains("SMTP")){
 					JOptionPane.showMessageDialog(tp, "Please enter in a valid smtp server");
 				}
-				else if(!eml.getText().contains("@")){
+				else if(!eml.getText().contains("@") && !eml.getText().endsWith(".***")){
 					JOptionPane.showMessageDialog(eml, "Please enter a valid email address");
 				}
 				

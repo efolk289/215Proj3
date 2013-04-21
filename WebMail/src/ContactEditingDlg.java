@@ -3,10 +3,12 @@
 //Project 3: Email Client
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 //implements ActionListener
 public class ContactEditingDlg extends JDialog {
@@ -152,6 +154,15 @@ public class ContactEditingDlg extends JDialog {
 				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
 				if(temp ==JOptionPane.YES_OPTION){
 					//if(c==null){
+					if(!email.getText().contains("@") && !email.getText().endsWith(".***")){
+						JOptionPane.showMessageDialog(email, "Please enter a valid email address");
+					}
+					
+					if(phone.getText().contains("###-###-####")){
+						JOptionPane.showMessageDialog(phone, "Please enter a valid phone number");
+					}
+					
+					else{					
 						//Contact toSave = new Contact();
 						toSave.setfName(fName.getText());
 						toSave.setlName(lName.getText());
@@ -161,7 +172,7 @@ public class ContactEditingDlg extends JDialog {
 						DataStore DS = DataStore.getInstance();
 						DS.addContact(toSave);
 						dispose();
-					//}
+					}
 					
 				/*	else{
 						c.setfName(fName.getText());
