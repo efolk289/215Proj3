@@ -1,3 +1,7 @@
+//Ellen Folk, Devin Burnes
+//CPSC 215 002
+//Project 3: Email Client
+
 import javax.swing.*;
 
 import java.awt.*;

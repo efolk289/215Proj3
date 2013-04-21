@@ -1,4 +1,6 @@
-
+//Ellen Folk, Devin Burnes
+//CPSC 215 002
+//Project 3: Email Client
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -82,8 +84,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		fileNew.add(new2);
 		fileMenu.add(fileNew);		
 		fileExit = new JMenuItem("Exit");
-		fileExit.addActionListener(this);
 		fileMenu.add(fileExit);
+		
+		new1.addActionListener(this);
+		new2.addActionListener(this);
+		fileExit.addActionListener(this);
 		
 		//Edit
 		editMenu = new JMenu("Edit");
@@ -143,31 +148,22 @@ public class MainFrame extends JFrame implements ActionListener {
 			System.out.println("Help Dialog Closed.");			
 		}
 		
-		else if (arg0.getSource() == mainAdd){
+		else if (arg0.getSource() == new1){
+			new EmailTransmissionDlg();
+		}
+		
+		else if (arg0.getSource() == new2){
 			new ContactEditingDlg();
 		}
 		
-		/*else if (arg0.getSource() == mainEdit){
-			
-            
-            int row = event.getMinSelectionIndex();
-           
-            DataStore DS = DataStore.getInstance();
-	        Vector<Contact> temp = DS.getContacts();
-	        new ContactEditingDlg(temp.elementAt(row)); 
+		else if (arg0.getSource() == mainAdd){
+			new ContactEditingDlg();
 		}
-		*/
-		else if (arg0.getSource() == mainDel){
-			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the contact?", "Confirm Delete", 2);
-			if(temp ==JOptionPane.YES_OPTION){
-				System.exit(EXIT_ON_CLOSE);
-			}
-		}
-		
+
 		else if (arg0.getSource() == fileExit){
 			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
 			if(temp ==JOptionPane.YES_OPTION){
-				//delete
+				System.exit(EXIT_ON_CLOSE);
 			}
 		}
 		
@@ -210,9 +206,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainDel = new JButton("Delete");
 		
 		mainAdd.addActionListener(this);
-		mainEdit.addActionListener(this);
 		mainEdit.setEnabled(false);
-		mainDel.addActionListener(this);
 		mainDel.setEnabled(false);
 		pane.setLayout(new BorderLayout());
 		
@@ -244,16 +238,30 @@ public class MainFrame extends JFrame implements ActionListener {
             	mainEdit.addActionListener(new ActionListener(){
             		
 					public void actionPerformed(ActionEvent e2) {
-						if (e2.getSource() == mainEdit){				            
-				            int row = event.getMinSelectionIndex();
+						int row = event.getMinSelectionIndex();
 				           
-				            DataStore DS = DataStore.getInstance();
-					        new ContactEditingDlg(DS.getContactAt(row)); 
-						}
-						
-					}
-            		
+			            DataStore DS = DataStore.getInstance();				            				            
+					    new ContactEditingDlg(DS.getContactAt(row)); 			
+					}            		
             	});
+            	
+            	mainDel.addActionListener(new ActionListener(){
+            		
+            		public void actionPerformed(ActionEvent e3) {
+            			int row = event.getMinSelectionIndex();
+            			
+            			DataStore DS = DataStore.getInstance();
+            			
+						int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the contact?", "Confirm Delete", 2);
+						if(temp ==JOptionPane.YES_OPTION){
+							DS.rmContactAt(row);
+							//dispose();
+						}
+						else if (temp == JOptionPane.NO_OPTION){
+							//dispose();
+						}
+            		}
+            	});           	
             }  
             });				
 

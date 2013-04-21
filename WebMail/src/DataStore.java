@@ -1,3 +1,7 @@
+//Ellen Folk, Devin Burnes
+//CPSC 215 002
+//Project 3: Email Client
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +52,10 @@ public class DataStore {
 	
 	public Contact getContactAt(int at){
 		return contacts.elementAt(at);
+	}
+	
+	public void rmContactAt(int at){
+		contacts.remove(at);
 	}
 	
 	public void addContact(Contact toSave){

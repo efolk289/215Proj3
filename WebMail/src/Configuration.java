@@ -1,3 +1,7 @@
+//Devin Burnes, Ellen Folk
+//CPSC 215 002
+//Project 3: Email Client
+
 import java.io.Serializable;
 
 

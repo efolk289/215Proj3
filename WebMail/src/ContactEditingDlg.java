@@ -1,3 +1,7 @@
+//Ellen Folk, Devin Burnes
+//CPSC 215 002
+//Project 3: Email Client
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -49,11 +53,12 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		phone = new JTextField();
 		email = new JTextField();
 		makeFields();
+		setModal(true);
 	}
 	
 	ContactEditingDlg(Contact c){
 		this();
-		
+		setModal(true);
 		//populate 
 		fName = new JTextField(c.getfName());
 		lName = new JTextField(c.getlName());
@@ -67,6 +72,8 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	}
 	
 	void makeFields(){
+		
+		fName.setForeground(Color.black);
 
 		Container pane = getContentPane();
 		setLayout(new BorderLayout());
