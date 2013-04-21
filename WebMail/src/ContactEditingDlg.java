@@ -8,7 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ContactEditingDlg extends JDialog implements ActionListener{
+//implements ActionListener
+public class ContactEditingDlg extends JDialog {
 
 	/**
 	 * 
@@ -21,7 +22,7 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	JLabel phonePr;
 	JLabel emailPr;
 	
-	JTextField fName;
+	JTextField fName = new JTextField("asdf");
 	JTextField lName;
 	JTextField address;  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
 	JTextField phone;
@@ -41,7 +42,7 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	
 	
 	ContactEditingDlg(){
-		setVisible(true);
+		
 		setModal(true);
 		setSize(new Dimension(600,400));
 		setTitle("Create or Edit Contacts");
@@ -52,15 +53,17 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		address = new JTextField();
 		phone = new JTextField();
 		email = new JTextField();
-		makeFields();
-		setModal(true);
+		makeFields(null);
+		setVisible(true);
 	}
 	
 	ContactEditingDlg(Contact c){
-		this();
 		setModal(true);
+		setSize(new Dimension(600,400));
+		setTitle("Create or Edit Contacts");
+		
 		//populate 
-		fName = new JTextField(c.getfName());
+		JTextField fName = new JTextField("first name");
 		lName = new JTextField(c.getlName());
 		address = new JTextField(c.getAddress());
 		phone = new JTextField(c.getPhone());
@@ -70,18 +73,20 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		
 		fName.setBackground(Color.DARK_GRAY);
 		
-		makeFields();
+		makeFields(c);
+		
+		setVisible(true);
 	}
 	
-	void makeFields(){
+	void makeFields(Contact c){
 		
 		fName.setForeground(Color.black);
 
 		Container pane = getContentPane();
 		setLayout(new BorderLayout());
-		JLabel top = new JLabel("Please press enter after entering text in each field",  JLabel.CENTER);
+		//JLabel top = new JLabel("Please press enter after entering text in each field",  JLabel.CENTER);
 
-		pane.add(top, BorderLayout.NORTH);
+		//pane.add(top, BorderLayout.NORTH);
 		left = new JPanel();
 		right = new JPanel();
 		left.setLayout(new GridLayout(5,1));
@@ -109,12 +114,12 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		phone= new JTextField();
 		email= new JTextField();
 		
-		fName.addActionListener(this);
+		/*fName.addActionListener(this);
 		lName.addActionListener(this);
 		address.addActionListener(this);
 		phone.addActionListener(this);
 		email.addActionListener(this);
-		
+	*/	
 		
 		right.add(fName);
 		right.add(lName);
@@ -126,16 +131,66 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 		
 		pane.add(right,BorderLayout.CENTER);
 		
-		makeButtons(pane);
+		makeButtons(pane, c);
 		
 	}
 	
-	void makeButtons(Container pane){
+	void makeButtons(Container pane, Contact c){
 		CEDSave = new JButton("Save");
 		CEDCancel = new JButton("Cancel");		
-		
-		CEDSave.addActionListener(this);
-		CEDCancel.addActionListener(this);
+		final Contact toSave;
+		if(c==null){
+			toSave = new Contact();
+		}
+		else{
+			toSave = c;
+		}
+		CEDSave.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
+				if(temp ==JOptionPane.YES_OPTION){
+					//if(c==null){
+						//Contact toSave = new Contact();
+						toSave.setfName(fName.getText());
+						toSave.setlName(lName.getText());
+						toSave.setAddress(address.getText());
+						toSave.setPhone(phone.getText());
+						toSave.setEmail(email.getText());
+						DataStore DS = DataStore.getInstance();
+						DS.addContact(toSave);
+						dispose();
+					//}
+					
+				/*	else{
+						c.setfName(fName.getText());
+						c.setlName(lName.getText());
+						c.setAddress(address.getText());
+						c.setPhone(phone.getText());
+						c.setEmail(email.getText());
+						dispose();
+					}
+					
+				*/}
+				
+				else{
+					dispose();
+				}
+			}
+		});
+				
+		CEDCancel.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm Cancel", 2);
+				if(temp ==JOptionPane.YES_OPTION){
+					dispose();
+				}
+				
+			}
+			
+		});
 		
 		JPanel inner = new JPanel();
 	    inner.setLayout(new GridLayout(1,2));
@@ -144,9 +199,11 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 	    
 	    pane.add(inner, BorderLayout.SOUTH);
 	    
+	    
+	    
 	}
 	
-	public void actionPerformed(ActionEvent arg0) {
+	/*public void actionPerformed(ActionEvent arg0) {
 		
 		if(arg0.getSource() == CEDSave){
 			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
@@ -158,8 +215,8 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 				dispose();
 			}
 			else if(temp ==JOptionPane.NO_OPTION){
-				//dispose();
-				setVisible(false);
+				dispose();
+				//setVisible(false);
 			}
 			
 			
@@ -192,7 +249,7 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 			te = new String(email.getText());
 		}
 		
-
+*/
 		
 	}
-}
+//}

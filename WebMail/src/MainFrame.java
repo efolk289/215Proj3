@@ -19,8 +19,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	JMenuBar menubar;
 	JMenu fileMenu;
 	JMenu fileNew;
-	JMenuItem new1;
-	JMenuItem new2;
+	JMenuItem msg;
+	JMenuItem con;
 	JMenuItem fileExit;
 	JMenu editMenu;
 	JMenuItem editCopy;
@@ -50,10 +50,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		super(caption);
 		
 		//set icon
-		//ImageIcon img = new ImageIcon(pathToFileOnDisk);
-		//mYFrame.setIconImage(img.getImage());
-		
-		//JFrame.setIconImage(Image image);
+		ImageIcon img = new ImageIcon("imgs/mainIcon.jpg");
+		setIconImage(img.getImage());
 		
 		//make size and exit on close
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,18 +80,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		fileMenu = new JMenu("File");
 		fileMenu.setBackground(Color.GREEN);
 		fileNew = new JMenu("New");
-		new1 = new JMenuItem("Message");
-		new2 = new JMenuItem("Contact");
-		fileNew.add(new1);
-		fileNew.add(new2);
+		msg = new JMenuItem("Message");
+		con = new JMenuItem("Contact");
+		fileNew.add(msg);
+		fileNew.add(con);
 		fileMenu.add(fileNew);		
 		fileExit = new JMenuItem("Exit");
 		fileMenu.add(fileExit);
 		
 	
 		
-		new1.addActionListener(this);
-		new2.addActionListener(this);
+		msg.addActionListener(this);
+		con.addActionListener(this);
 		fileExit.addActionListener(this);
 		
 		//Edit
@@ -138,7 +136,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	public void createConfig(){
-		CNF = new Configuration();
+		DataStore DS = DataStore.getInstance();
+		CNF = DS.getConfig();
 		CNF.setEmail("blah@user.net");
 		CNF.setSMTP("SMTP.gmail.com");
 	}
@@ -154,11 +153,11 @@ public class MainFrame extends JFrame implements ActionListener {
 			System.out.println("Help Dialog Closed.");			
 		}
 		
-		else if (arg0.getSource() == new1){
+		else if (arg0.getSource() == msg){
 			new EmailTransmissionDlg();
 		}
 		
-		else if (arg0.getSource() == new2){
+		else if (arg0.getSource() == con){
 			new ContactEditingDlg();
 		}
 		
@@ -223,7 +222,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			         int row = target.getSelectedRow();
 			         
 			         DataStore DS = DataStore.getInstance();
-				     new ContactEditingDlg(DS.getContactAt(row));
+				     new EmailTransmissionDlg(DS.getContactAt(row));
 			         }
 			   }
 			});
@@ -247,7 +246,7 @@ public class MainFrame extends JFrame implements ActionListener {
 						int row = event.getMinSelectionIndex();
 				           
 			            DataStore DS = DataStore.getInstance();				            				            
-					    new ContactEditingDlg(DS.getContactAt(row)); 			
+					    new ContactEditingDlg(DS.getContactAt(row));
 					}            		
             	});
             	

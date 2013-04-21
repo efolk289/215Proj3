@@ -58,7 +58,10 @@ public class ConfigurationDlg extends JDialog{
 		cncl.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-                dispose();
+				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
+				if(temp ==JOptionPane.YES_OPTION){
+					dispose();
+				}
 			}
 		});
 		
@@ -74,9 +77,12 @@ public class ConfigurationDlg extends JDialog{
 				}
 				
 				else{
-					cfg.setEmail(eml.getText());
-					cfg.setSMTP(tp.getText());
-                	dispose();
+					int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm Save", 2);
+					if(temp ==JOptionPane.YES_OPTION){
+						cfg.setEmail(eml.getText());
+						cfg.setSMTP(tp.getText());
+						dispose();
+					}
 				}
 			}
 		});

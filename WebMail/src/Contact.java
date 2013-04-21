@@ -26,6 +26,14 @@ public class Contact implements Serializable {
 		email = iEmail;
 	}
 	
+	public Contact() {
+		fName = new String();
+		lName = new String();
+		address = new String();
+		phone = new String();
+		email = new String();
+	}
+
 	public String getfName() {
 		return fName;
 	}

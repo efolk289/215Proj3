@@ -14,18 +14,28 @@ public class SystemInformationDlg extends JDialog{
 	private static final long serialVersionUID = 6L;
 	
 	SystemInformationDlg(){
-		setVisible(true);
+		
 		setModal(true);
 		setSize(new Dimension(500,400));
-		setBackground(Color.darkGray);
+		setBackground(Color.white);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+		//set icon
+		ImageIcon img = new ImageIcon("imgs/mainIcon.jpg");
+		setIconImage(img.getImage());
 		
-		JPanel info = new JPanel();
-		info.add(new Label("A 215 email client"));
-		JPanel info2 = new JPanel();
-		info2.add(new Label("asdf"));
-		add(info);
-		add(info2);
+		JTextArea about = new JTextArea(
+				"An email client designed by Ellen Folk and Devin Burnes for CPSC 215 002.\n" +
+				"Designed in Eclipse Juno on OSX 10.8 and Windows 7\n" +
+				"");
+		about.setEditable(false);
+		about.setForeground(new Color(3,28,120));
+
+		add(about);
+		
+		
+		
+		setVisible(true);
 		
 	}
 
