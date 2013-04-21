@@ -36,6 +36,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	JButton mainAdd;
 	JButton mainEdit;
 	JButton mainDel;
+	
+	Configuration CNF;
 	/**
 	 * 
 	 */
@@ -57,6 +59,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		//setSize(new Dimension(100,100));
 		
 		createMenus();
+		
+		createConfig();
 		
 		ContactTableModel CTM = new ContactTableModel();
 		createFrame(CTM);
@@ -122,6 +126,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}
 	
+	public void createConfig(){
+		CNF = new Configuration();
+		CNF.setEmail("blah@user.net");
+		CNF.setSMTP("SMTP.gmail.com");
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == helpAbout)
 		{
@@ -162,7 +172,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		else if (arg0.getSource() == confiConfigure){
-			new ConfigurationDlg();
+			new ConfigurationDlg(CNF);
 		}
 		
 	}

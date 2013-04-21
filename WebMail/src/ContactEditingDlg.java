@@ -70,7 +70,8 @@ public class ContactEditingDlg extends JDialog implements ActionListener{
 
 		Container pane = getContentPane();
 		setLayout(new BorderLayout());
-		JLabel top = new JLabel("Please press enter after entering text in each field");
+		JLabel top = new JLabel("Please press enter after entering text in each field",  JLabel.CENTER);
+
 		pane.add(top, BorderLayout.NORTH);
 		left = new JPanel();
 		right = new JPanel();

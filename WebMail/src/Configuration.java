@@ -3,9 +3,39 @@ import java.io.Serializable;
 
 public class Configuration implements Serializable {
 
-	/**
-	 * store email address and IP 
-	 */
+	private static String eAddress;
+    private static String smtp;
+    
 	private static final long serialVersionUID = 1L;
 
+	public String getSMTP(){
+		return smtp;
+	}
+
+	public String getEmail(){
+		return eAddress;
+	}
+	
+	public void setEmail(String E){
+		eAddress = E;
+	}
+	
+	public void setSMTP(String i){
+		smtp = i;		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
