@@ -142,43 +142,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		CNF.setSMTP("SMTP.gmail.com");
 	}
 	
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == helpAbout)
-		{
-			System.out.println("Wow, a button got pressed!");
-			
-			//JOptionPane.showMessageDialog(null, "A button was pressed");
-			new SystemInformationDlg();
-			
-			System.out.println("Help Dialog Closed.");			
-		}
-		
-		else if (arg0.getSource() == msg){
-			new EmailTransmissionDlg();
-		}
-		
-		else if (arg0.getSource() == con){
-			new ContactEditingDlg();
-		}
-		
-		else if (arg0.getSource() == mainAdd){
-			new ContactEditingDlg();
-		}
-
-		else if (arg0.getSource() == fileExit){
-			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
-			if(temp ==JOptionPane.YES_OPTION){
-				System.exit(EXIT_ON_CLOSE);
-			}
-		}
-		
-		else if (arg0.getSource() == confiConfigure){
-			new ConfigurationDlg(CNF);
-		}
-		
-	}
-
-	
 	public void createFrame(TableModel CTM){
 		//TableModel ContactModel = new TableModel();
 		
@@ -246,13 +209,15 @@ public class MainFrame extends JFrame implements ActionListener {
 						int row = event.getMinSelectionIndex();
 				           
 			            DataStore DS = DataStore.getInstance();				            				            
-					    new ContactEditingDlg(DS.getContactAt(row));
+					    new ContactEditingDlg(DS.getContactAt(row), row);
 					}            		
             	});
             	
             	mainDel.addActionListener(new ActionListener(){
             		
             		public void actionPerformed(ActionEvent e3) {
+            			
+            			if(e3.getSource() == mainDel){
             			int row = event.getMinSelectionIndex();
             			
             			DataStore DS = DataStore.getInstance();
@@ -260,11 +225,10 @@ public class MainFrame extends JFrame implements ActionListener {
 						int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the contact?", "Confirm Delete", 2);
 						if(temp ==JOptionPane.YES_OPTION){
 							DS.rmContactAt(row);
-							//dispose();
 						}
 						else if (temp == JOptionPane.NO_OPTION){
-							//dispose();
 						}
+            			}
             		}
             	});           	
             }  
@@ -283,6 +247,43 @@ public class MainFrame extends JFrame implements ActionListener {
 		pane.add(scrollPane, BorderLayout.CENTER);
 		
 
+	}
+	
+	
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == helpAbout)
+		{
+			System.out.println("Wow, a button got pressed!");
+			
+			//JOptionPane.showMessageDialog(null, "A button was pressed");
+			new SystemInformationDlg();
+			
+			System.out.println("Help Dialog Closed.");			
+		}
+		
+		else if (arg0.getSource() == msg){
+			new EmailTransmissionDlg();
+		}
+		
+		else if (arg0.getSource() == con){
+			new ContactEditingDlg();
+		}
+		
+		else if (arg0.getSource() == mainAdd){
+			new ContactEditingDlg();
+		}
+
+		else if (arg0.getSource() == fileExit){
+			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
+			if(temp ==JOptionPane.YES_OPTION){
+				System.exit(EXIT_ON_CLOSE);
+			}
+		}
+		
+		else if (arg0.getSource() == confiConfigure){
+			new ConfigurationDlg(CNF);
+		}
+		
 	}
 	public static void main(String[] args) {
 		MainFrame myFrame = new MainFrame("TigerMail v1");

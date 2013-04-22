@@ -23,6 +23,8 @@ public class ContactEditingDlg extends JDialog {
 	private static final long serialVersionUID = 7L;
 	
 	Contact contact = new Contact();
+	int row;
+	boolean exists = false;
 	
 	JLabel lNamePr;
 	JLabel fNamePr;
@@ -67,8 +69,9 @@ public class ContactEditingDlg extends JDialog {
 		
 	}
 	
-	ContactEditingDlg(Contact c){
+	ContactEditingDlg(Contact c, int r){
 		contact = c;
+		row = r;
 		
 		setModal(true);
 		setSize(new Dimension(600,400));
@@ -79,7 +82,6 @@ public class ContactEditingDlg extends JDialog {
 		address = new JTextField();
 		phone = new JTextField();
 		email = new JTextField();
-		
 		
 		makeFields();
 
@@ -132,14 +134,16 @@ public class ContactEditingDlg extends JDialog {
 	}
 	
 	void makeButtons(Container pane, Contact c){
+		
 		CEDSave = new JButton("Save");
 		CEDCancel = new JButton("Cancel");		
 		final Contact toSave;
 		if(c==null){
-			toSave = new Contact();
+			toSave = new Contact();			
 		}
 		else{
 			toSave = c;
+			exists = true;
 		}
 		
 		CEDSave.addActionListener(new ActionListener(){
@@ -147,6 +151,7 @@ public class ContactEditingDlg extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				boolean validEmail = true;
 				boolean validPhone = false;
+
 				
 				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
 				if(temp ==JOptionPane.YES_OPTION){
@@ -154,7 +159,6 @@ public class ContactEditingDlg extends JDialog {
 					//validate email
 					try {
 			            new InternetAddress(email.getText()).validate();	
-			           // validEmail = true;
 			        } 
 					catch (AddressException ex) {
 			            JOptionPane.showMessageDialog(email, "Please enter a valid email address", 
@@ -166,7 +170,7 @@ public class ContactEditingDlg extends JDialog {
 					Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
 				    Matcher matcher = pattern.matcher(phone.getText());
 					if(!matcher.matches()){
-						JOptionPane.showMessageDialog(phone, "Please enter a valid phone number \nin the format xxx-xxx-xxxx", 
+						JOptionPane.showMessageDialog(phone, "Please enter a valid phone number \n in the format xxx-xxx-xxxx", 
 								"Phone error", JOptionPane.ERROR_MESSAGE);
 					}
 						else{
@@ -180,8 +184,12 @@ public class ContactEditingDlg extends JDialog {
 						toSave.setAddress(address.getText());
 						toSave.setPhone(phone.getText());
 						toSave.setEmail(email.getText());
-						DataStore DS = DataStore.getInstance();
-						DS.addContact(toSave);
+						
+						if(exists==false){
+							DataStore DS = DataStore.getInstance();
+							DS.addContact(toSave);
+							
+						}
 						dispose();
 					}
 				}
