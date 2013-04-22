@@ -77,12 +77,12 @@ public class DataStore {
 	public static void saveConfiguration(Configuration c, String filename) 
 			throws IOException
 	{
-	FileOutputStream fileOut = new FileOutputStream(filename);
-    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    
-    out.writeObject(c);
-    out.close();
-    fileOut.close();
+		FileOutputStream fileOut = new FileOutputStream(filename);
+	    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	    
+	    out.writeObject(c);
+	    out.close();
+	    fileOut.close();
 	}
 	
 	public static Configuration loadConfiguration(String filename) 
@@ -100,12 +100,12 @@ public class DataStore {
 	public static void saveContact(Contact c, String filename) 
 			throws IOException
 	{
-	FileOutputStream fileOut = new FileOutputStream(filename);
-    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    
-    out.writeObject(c);
-    out.close();
-    fileOut.close();
+		FileOutputStream fileOut = new FileOutputStream(filename);
+	    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	    
+	    out.writeObject(c);
+	    out.close();
+	    fileOut.close();
 	}
 	
 	public static Contact loadContact(String filename) 

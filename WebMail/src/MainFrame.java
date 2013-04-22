@@ -88,8 +88,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		fileExit = new JMenuItem("Exit");
 		fileMenu.add(fileExit);
 		
-	
-		
 		msg.addActionListener(this);
 		con.addActionListener(this);
 		fileExit.addActionListener(this);
@@ -129,10 +127,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		//set jframe menubar, 
 		setJMenuBar(menubar);
-		
-		//filemenu.add(new JSeparator());
-		
-		
+				
 	}
 	
 	public void createConfig(){
@@ -150,8 +145,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainContacts = new JTable(CTM);
 		mainContacts.setGridColor(Color.black);
 		mainContacts.setRowSelectionAllowed(true);
-		
-		
 		
 		((ContactTableModel) CTM).addContact(new Contact("fir1", "las1", "addr1", "phone1", "em1"));
 		
@@ -240,9 +233,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	    inner.add(mainAdd);
 	    inner.add(mainEdit);
 	    inner.add(mainDel);
-	    
-	    
-	    
+	    	    
 	    pane.add(inner, BorderLayout.SOUTH);		
 		pane.add(scrollPane, BorderLayout.CENTER);
 		
@@ -253,12 +244,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == helpAbout)
 		{
-			System.out.println("Wow, a button got pressed!");
 			
 			//JOptionPane.showMessageDialog(null, "A button was pressed");
 			new SystemInformationDlg();
-			
-			System.out.println("Help Dialog Closed.");			
+	
 		}
 		
 		else if (arg0.getSource() == msg){

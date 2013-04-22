@@ -23,7 +23,7 @@ public class ContactEditingDlg extends JDialog {
 	private static final long serialVersionUID = 7L;
 	
 	Contact contact = new Contact();
-	int row;
+	int row= -1;
 	boolean exists = false;
 	
 	JLabel lNamePr;
@@ -140,6 +140,7 @@ public class ContactEditingDlg extends JDialog {
 		final Contact toSave;
 		if(c==null){
 			toSave = new Contact();			
+			exists = false;
 		}
 		else{
 			toSave = c;
@@ -178,17 +179,16 @@ public class ContactEditingDlg extends JDialog {
 						}
 
 					if(validEmail==true && validPhone ==true){
-						//Contact toSave = new Contact();
+
 						toSave.setfName(fName.getText());
 						toSave.setlName(lName.getText());
 						toSave.setAddress(address.getText());
 						toSave.setPhone(phone.getText());
 						toSave.setEmail(email.getText());
 						
-						if(exists==false){
+						if(row == -1){
 							DataStore DS = DataStore.getInstance();
-							DS.addContact(toSave);
-							
+							DS.addContact(toSave);							
 						}
 						dispose();
 					}
@@ -208,10 +208,8 @@ public class ContactEditingDlg extends JDialog {
 				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm Cancel", 2);
 				if(temp ==JOptionPane.YES_OPTION){
 					dispose();
-				}
-				
-			}
-			
+				}				
+			}			
 		});
 		
 		JPanel inner = new JPanel();
@@ -225,5 +223,5 @@ public class ContactEditingDlg extends JDialog {
 	    
 	}
 		
-	}
-//}
+}
+
