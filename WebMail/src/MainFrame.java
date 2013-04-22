@@ -131,10 +131,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	public void createConfig(){
+		
 		DataStore DS = DataStore.getInstance();
-		CNF = DS.getConfig();
-		CNF.setEmail("blah@user.net");
-		CNF.setSMTP("SMTP.gmail.com");
+		
+		DS.setConfig("blah@user.net", "smtp.gmail.com");
 	}
 	
 	public void createFrame(TableModel CTM){
@@ -146,7 +146,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainContacts.setGridColor(Color.black);
 		mainContacts.setRowSelectionAllowed(true);
 		
-		((ContactTableModel) CTM).addContact(new Contact("fir1", "las1", "addr1", "phone1", "em1"));
+		String[] hdr = {"First Name",
+                "Last Name",
+                "Address",
+                "Phone #",
+                "Email Address"};
+
+		((ContactTableModel) CTM).addContact(new Contact("Devin", "Burnes", "Iniameni", "843-812-077", "dburnes@clemson.edu"));
 		
 		Container pane = getContentPane();
 		pane.add(mainContacts);
@@ -270,7 +276,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 		else if (arg0.getSource() == confiConfigure){
-			new ConfigurationDlg(CNF);
+			new ConfigurationDlg();
 		}
 		
 	}

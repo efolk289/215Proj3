@@ -62,9 +62,10 @@ public class DataStore {
 		contacts.add(toSave);
 	}
 
-	public void setConfig(Configuration config) {
-		this.config = config;
-	}
+	 public void setConfig(String email, String smtp) {
+		  config.setEmail(email);
+		  config.setSMTP(smtp);
+		 }
 
 	public Vector<Contact> getContacts() {
 		return contacts;
