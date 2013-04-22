@@ -2,6 +2,8 @@
 //CPSC 215 002
 //Project 3: Email Client
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
@@ -9,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //implements ActionListener
 public class ContactEditingDlg extends JDialog {
@@ -17,7 +21,9 @@ public class ContactEditingDlg extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 7L;
-
+	
+	Contact contact = new Contact();
+	
 	JLabel lNamePr;
 	JLabel fNamePr;
 	JLabel addPr;
@@ -50,41 +56,36 @@ public class ContactEditingDlg extends JDialog {
 		setTitle("Create or Edit Contacts");
 		
 		//initialize
+		
 		fName = new JTextField();
 		lName = new JTextField();
 		address = new JTextField();
 		phone = new JTextField();
 		email = new JTextField();
-		makeFields(null);
 		
-		//setVisible(true);
+		makeFields();
 		
 	}
 	
 	ContactEditingDlg(Contact c){
-		this();
+		contact = c;
 		
-		//populate 
-		/*fName = new JTextField(c.getfName());
-		lName = new JTextField(c.getlName());
-		address = new JTextField(c.getAddress());
-		phone = new JTextField(c.getPhone());
-		email = new JTextField(c.getEmail());
-		
-		fName.setBackground(Color.DARK_GRAY);
-	*/
+		setModal(true);
+		setSize(new Dimension(600,400));
+		setTitle("Create or Edit Contacts");
 
-		fName.setText(c.getfName());
-		lName.setText(c.getlName());
-		address.setText(c.getAddress());
-		phone.setText(c.getPhone());
-		email.setText(c.getEmail());
-		makeFields(c);
+		fName = new JTextField();
+		lName = new JTextField();
+		address = new JTextField();
+		phone = new JTextField();
+		email = new JTextField();
 		
-		//setVisible(true);
+		
+		makeFields();
+
 	}
 	
-	void makeFields(Contact c){
+	void makeFields(){
 		
 		fName.setForeground(Color.black);
 
@@ -94,48 +95,40 @@ public class ContactEditingDlg extends JDialog {
 		right = new JPanel();
 		left.setLayout(new GridLayout(5,1));
 		right.setLayout(new GridLayout(5,1));
-		
+
 		fNamePr = new JLabel("First Name:", JLabel.CENTER);
 		lNamePr = new JLabel("Last Name:", JLabel.CENTER);
 		addPr = new JLabel("Address:", JLabel.CENTER);
 		phonePr = new JLabel("Phone number:", JLabel.CENTER);
 		emailPr = new JLabel("Email address:", JLabel.CENTER);
-		
+
 		//fName.setHorizontal
-		
+
 		left.add(fNamePr);
 		left.add(lNamePr);		
 		left.add(addPr);
 		left.add(phonePr);
 		left.add(emailPr);
-				
+
 		pane.add(left, BorderLayout.WEST);
-		
-		fName = new JTextField();
-		lName= new JTextField();
-		address= new JTextField();  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
-		phone= new JTextField();
-		email= new JTextField();
-		
-		/*fName.addActionListener(this);
-		lName.addActionListener(this);
-		address.addActionListener(this);
-		phone.addActionListener(this);
-		email.addActionListener(this);
-	*/	
-		
+
+		fName = new JTextField(contact.getfName());
+		lName= new JTextField(contact.getlName());
+		address= new JTextField(contact.getAddress());  //!!!!!!!!!!!!!!!!!!CHANGE TO ADDRESS TYPE!
+		phone= new JTextField(contact.getPhone());
+		email= new JTextField(contact.getEmail());
+
 		right.add(fName);
 		right.add(lName);
 		right.add(address);
 		right.add(phone);
 		right.add(email);
-		
+
 		fNamePr.setLabelFor(fName);
-		
+
 		pane.add(right,BorderLayout.CENTER);
-		
-		makeButtons(pane, c);
-		
+
+		makeButtons(pane, contact);
 	}
 	
 	void makeButtons(Container pane, Contact c){
@@ -148,22 +141,39 @@ public class ContactEditingDlg extends JDialog {
 		else{
 			toSave = c;
 		}
+		
 		CEDSave.addActionListener(new ActionListener(){
-			
+
 			public void actionPerformed(ActionEvent e) {
+				boolean validEmail = true;
+				boolean validPhone = false;
 				
 				int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
 				if(temp ==JOptionPane.YES_OPTION){
-					//if(c==null){
-					if(!email.getText().contains("@") && !email.getText().endsWith(".***")){
-						JOptionPane.showMessageDialog(email, "Please enter a valid email address");
-					}
 					
-					if(phone.getText().contains("###-###-####")){
-						JOptionPane.showMessageDialog(phone, "Please enter a valid phone number");
-					}
+					//validate email
+					try {
+			            new InternetAddress(email.getText()).validate();	
+			           // validEmail = true;
+			        } 
+					catch (AddressException ex) {
+			            JOptionPane.showMessageDialog(email, "Please enter a valid email address", 
+			            		"Email error", JOptionPane.ERROR_MESSAGE);
+			            validEmail = false;
+			        }
 					
-					else{					
+					 //validate phone number
+					Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
+				    Matcher matcher = pattern.matcher(phone.getText());
+					if(!matcher.matches()){
+						JOptionPane.showMessageDialog(phone, "Please enter a valid phone number \nin the format xxx-xxx-xxxx", 
+								"Phone error", JOptionPane.ERROR_MESSAGE);
+					}
+						else{
+							validPhone = true;
+						}
+
+					if(validEmail==true && validPhone ==true){
 						//Contact toSave = new Contact();
 						toSave.setfName(fName.getText());
 						toSave.setlName(lName.getText());
@@ -174,19 +184,11 @@ public class ContactEditingDlg extends JDialog {
 						DS.addContact(toSave);
 						dispose();
 					}
-					
-				/*	else{
-						c.setfName(fName.getText());
-						c.setlName(lName.getText());
-						c.setAddress(address.getText());
-						c.setPhone(phone.getText());
-						c.setEmail(email.getText());
-						dispose();
-					}
-					
-				*/}
+				}
 				
-				else{
+
+				//cancel save
+				else{ 
 					dispose();
 				}
 			}
@@ -214,54 +216,6 @@ public class ContactEditingDlg extends JDialog {
 	    setVisible(true);
 	    
 	}
-	
-	/*public void actionPerformed(ActionEvent arg0) {
-		
-		if(arg0.getSource() == CEDSave){
-			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to save?", "Confirm save", 2);
-			if(temp ==JOptionPane.YES_OPTION){
-				Contact toSave = new Contact(tf, tl, ta, tp, te);
-				System.out.println(fName.getText());
-				DataStore DS = DataStore.getInstance();
-				DS.addContact(toSave);
-				dispose();
-			}
-			else if(temp ==JOptionPane.NO_OPTION){
-				dispose();
-				//setVisible(false);
-			}
-			
-			
-		}
-		
-		else if (arg0.getSource() == CEDCancel){
-			int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm Exit", 2);
-			if(temp ==JOptionPane.YES_OPTION){
-				dispose();
-			}
-		}
-		
-		else if (arg0.getSource() == fName){
-			tf = new String(fName.getText());
-		}
-		
-		else if (arg0.getSource() == lName){
-			tl = new String(lName.getText());
-		}
-		
-		else if (arg0.getSource() == address){
-			ta = new String(address.getText());
-		}
-		
-		else if (arg0.getSource() == phone){
-			tp = new String(phone.getText());
-		}
-		
-		else if (arg0.getSource() == email){
-			te = new String(email.getText());
-		}
-		
-*/
 		
 	}
 //}
