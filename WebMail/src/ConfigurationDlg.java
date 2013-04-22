@@ -20,12 +20,20 @@ public class ConfigurationDlg extends JDialog{
 		JButton sve = new JButton("Save");
 		JButton cncl = new JButton("Cancel");
 
+		sve.setForeground(new Color(3, 28, 120));
+		cncl.setForeground(new Color(3, 28, 120));
+		
 		JPanel btns = new JPanel();
 		btns.setLayout(new GridLayout(1, 2));
 
 		JLabel ea = new JLabel("Email Address:");
 		JLabel smp = new JLabel("SMTP server:");
 
+		ea.setForeground(Color.white);
+		smp.setForeground(Color.white);
+		
+		ea.setFont(new Font("SansSerif", Font.BOLD, 12));
+		smp.setFont(new Font("SansSerif", Font.BOLD, 12));
 		JPanel txtT = new JPanel();
 		txtT.setLayout(new GridLayout(4, 1));
 
@@ -35,19 +43,24 @@ public class ConfigurationDlg extends JDialog{
 
 		final JTextArea eml = new JTextArea(DS.getConfig().getEmail());
 		final JTextArea tp = new JTextArea(DS.getConfig().getSMTP());
+		
+		eml.setForeground(new Color(3, 28, 120));
+		tp.setForeground(new Color(3, 28, 120));
+		
 		setModal(true);
 
 
-		setSize(new Dimension(200,130));
-		setMaximumSize(new Dimension(200, 130));
+		setSize(new Dimension(600,400));
+		setMaximumSize(new Dimension(600, 400));
 
 		setLayout(new BorderLayout());
-		setBackground(Color.blue);  //doesn't work
+		setBackground(new Color(3, 28, 120));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		btns.add(sve);
 		btns.add(cncl);
-
+		
+		
 		txtT.add(ea);
 		txtT.add(eml);
 

@@ -56,6 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		//make size and exit on close
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(1000,800));
+		setMaximumSize(new Dimension(1000, 800));
 		//setSize(new Dimension(100,100));
 		
 		createMenus();
@@ -74,11 +75,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		//create top menu
 		menubar = new JMenuBar();
-		menubar.setBackground(Color.GREEN);
+		menubar.setBackground(new Color(3,28,120));
 		
 		//File
 		fileMenu = new JMenu("File");
-		fileMenu.setBackground(Color.GREEN);
+		fileMenu.setBackground(new Color(3,28,120));
 		fileNew = new JMenu("New");
 		msg = new JMenuItem("Message");
 		con = new JMenuItem("Contact");
@@ -94,7 +95,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		//Edit
 		editMenu = new JMenu("Edit");
-		editMenu.setBackground(Color.GREEN);
+		editMenu.setBackground(new Color(3,28,120));
 		editCopy = new JMenuItem("Copy");
 		editCut = new JMenuItem("Cut");
 		editPaste = new JMenuItem("Paste");
@@ -104,7 +105,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		//Configure
 		confiMenu = new JMenu("Configuration");
-		confiMenu.setBackground(Color.GREEN);
+		confiMenu.setBackground(new Color(3,28,120));
 		confiConfigure = new JMenuItem("Configure");
 		confiConfigure.addActionListener(this);
 		
@@ -112,7 +113,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		//Help
 		helpMenu = new JMenu("Help");
-		helpMenu.setBackground(Color.GREEN);
+		helpMenu.setBackground(new Color(3,28,120));
 		helpAbout = new JMenuItem("About");
 		
 		helpAbout.addActionListener(this);
@@ -124,7 +125,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		menubar.add(editMenu);
 		menubar.add(confiMenu);
 		menubar.add(helpMenu);
-		
+		menubar.setForeground(Color.white);
 		//set jframe menubar, 
 		setJMenuBar(menubar);
 				
@@ -141,8 +142,42 @@ public class MainFrame extends JFrame implements ActionListener {
 		//TableModel ContactModel = new TableModel();
 		
 		
-		//JTable mainContacts = new JTable(CV, DS.ColNames);
+		DataStore DS = DataStore.getInstance();
+		/*//#$%@^@&@#%&^@#%^#%^@&@*@^%^#%^^@&@%*@$^&@$^@#$%!@#~#$~#%~^#^&@%^@^$!%#!~$%~@$%~@%$%^~
+        DefaultTableModel hd = new DefaultTableModel();
+        hd.setColumnIdentifiers(DS.ColNames);
+
+        DS.addContact(new Contact("Devin", "Burnes", "Iniameni", "843-812-077", "dburnes@clemson.edu"));
+		
+		for(int i = 0; i < DS.getContacts().size(); i++){
+			Vector<String> v = new Vector<String>();
+			v.add(DS.getContactAt(i).getfName());
+			v.add(DS.getContactAt(i).getlName());
+			v.add(DS.getContactAt(i).getAddress());
+			v.add(DS.getContactAt(i).getPhone());
+			v.add(DS.getContactAt(i).getEmail());
+
+			String [] s = v.toArray(new String[v.size()]);
+			
+			hd.insertRow(i, s);
+		}
+		
+		 int width = 0;
+		 for (int row = 0; row < table.getRowCount(); row++) {
+		     TableCellRenderer renderer = table.getCellRenderer(row, myColumn);
+		     Component comp = table.prepareRenderer(renderer, row, myColumn);
+		     width = Math.max (comp.getPreferredSize().width, width);
+		 }
+		
+		
+		mainContacts = new JTable(hd);
+		 //#$%@^@&@#%&^@#%^#%^@&@*@^%^#%^^@&@%*@$^&@$^@#$%!@#~#$~#%~^#^&@%^@^$!%#!~$%~@$%~@%$%^~
+		 */
+		
+		 
+		 //JTable mainContacts = new JTable(CV, DS.ColNames);
 		mainContacts = new JTable(CTM);
+		//((ContactTableModel) CTM).setColumnIdentifiers(DS.ColNames);
 		mainContacts.setGridColor(Color.black);
 		mainContacts.setRowSelectionAllowed(true);
 		
@@ -152,7 +187,11 @@ public class MainFrame extends JFrame implements ActionListener {
                 "Phone #",
                 "Email Address"};
 
-		((ContactTableModel) CTM).addContact(new Contact("Devin", "Burnes", "Iniameni", "843-812-077", "dburnes@clemson.edu"));
+		//((ContactTableModel) CTM).addContact(new Contact("Devin", "Burnes", "Iniameni", "843-812-077", "dburnes@clemson.edu"));
+		/*
+		mainContacts.getTableHeader().setFont( new Font( "SansSerif", Font.BOLD, 12));
+		mainContacts.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		*/
 		
 		Container pane = getContentPane();
 		pane.add(mainContacts);
@@ -171,6 +210,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		mainAdd = new JButton("Add"); //can accept an icon
 		mainEdit = new JButton("Edit");
 		mainDel = new JButton("Delete");
+		
+		mainAdd.setForeground(new Color(3,28,120));
+		mainEdit.setForeground(new Color(3,28,120));
+		mainDel.setForeground(new Color(3,28,120));
 		
 		mainAdd.addActionListener(this);
 		mainEdit.setEnabled(false);
@@ -250,10 +293,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == helpAbout)
 		{
-			
-			//JOptionPane.showMessageDialog(null, "A button was pressed");
-			new SystemInformationDlg();
-	
+			new SystemInformationDlg();	
 		}
 		
 		else if (arg0.getSource() == msg){

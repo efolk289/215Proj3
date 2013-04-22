@@ -31,9 +31,9 @@ public class EmailTransmissionDlg extends JDialog{
 	
 	EmailTransmissionDlg(){
 		setModal(true);
-		setSize(new Dimension(500,400));
-		setMaximumSize(new Dimension(500, 400));
-		setBackground(Color.white);
+		setSize(new Dimension(600,400));
+		setMaximumSize(new Dimension(600, 400));
+		setBackground(new Color(3, 28, 120));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setTitle("New Message");
@@ -46,17 +46,22 @@ public class EmailTransmissionDlg extends JDialog{
 			}
 		}
 
-		JLabel to = new JLabel("To: ");
-		JLabel from = new JLabel("From: ");
-		JLabel sub = new JLabel("Subject: ");
+		JLabel to = new JLabel("To: ", JLabel.CENTER);
+		JLabel from = new JLabel("From: ", JLabel.CENTER);
+		JLabel sub = new JLabel("Subject: ", JLabel.CENTER);
 		
-		to.setForeground(new Color(3, 28, 120));
-		from.setForeground(new Color(3, 28, 120));
+		to.setFont(new Font("SansSerif", Font.BOLD, 12));
+		from.setFont(new Font("SansSerif", Font.BOLD, 12));
+		sub.setFont(new Font("SansSerif", Font.BOLD, 12));
+		
+		to.setForeground(Color.white);
+		from.setForeground(Color.white);
+		sub.setForeground(Color.white);
 
 		JTextField email = new JTextField(DS.getConfig().getEmail(), 15);
 		final JTextField ject = new JTextField();
 		final JComboBox adrLst = new JComboBox(emailAddresses.toArray()); 
-		adrLst.setSelectedIndex(0);
+		//adrLst.setSelectedIndex(0);
 		adrLst.setEditable(false);
 
 		JPanel nfo = new JPanel();
@@ -67,9 +72,14 @@ public class EmailTransmissionDlg extends JDialog{
 		btns.setLayout(new GridLayout(1, 2));
 
 		final JTextArea msgCntnr = new JTextArea();
-
+		msgCntnr.setForeground(new Color(3, 28, 120));
+		msgCntnr.setFont(new Font("SansSerif", Font.BOLD, 12));
 		JButton snd = new JButton("Send Message");
 		JButton cncl = new JButton("Cancel");
+		
+		snd.setForeground(new Color(3, 28, 120));
+		cncl.setForeground(new Color(3, 28, 120));
+		
 		cncl.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

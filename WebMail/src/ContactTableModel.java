@@ -30,6 +30,10 @@ public class ContactTableModel extends AbstractTableModel {
 	public int getRowCount() {
 		return cList.size();
 	}
+	
+	public void setColumnIdentifiers(Vector<String> colNames){
+		setColumnIdentifiers(colNames);
+	}
 
 	
 	//finish re-doing this class for contacts.

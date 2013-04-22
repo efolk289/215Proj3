@@ -55,6 +55,7 @@ public class ContactEditingDlg extends JDialog {
 		
 		setModal(true);
 		setSize(new Dimension(600,400));
+		setMaximumSize(new Dimension(600, 400));
 		setTitle("Create or Edit Contacts");
 		
 		//initialize
@@ -75,6 +76,7 @@ public class ContactEditingDlg extends JDialog {
 		
 		setModal(true);
 		setSize(new Dimension(600,400));
+		setMaximumSize(new Dimension(600, 400));
 		setTitle("Create or Edit Contacts");
 
 		fName = new JTextField();
@@ -89,7 +91,7 @@ public class ContactEditingDlg extends JDialog {
 	
 	void makeFields(){
 		
-		fName.setForeground(Color.black);
+		setBackground(new Color(3, 28, 120));
 
 		Container pane = getContentPane();
 
@@ -103,14 +105,14 @@ public class ContactEditingDlg extends JDialog {
 		addPr = new JLabel("Address:", JLabel.CENTER);
 		phonePr = new JLabel("Phone number:", JLabel.CENTER);
 		emailPr = new JLabel("Email address:", JLabel.CENTER);
-
-		//fName.setHorizontal
-
-		left.add(fNamePr);
-		left.add(lNamePr);		
-		left.add(addPr);
-		left.add(phonePr);
-		left.add(emailPr);
+		
+		JLabel[] labels = new JLabel[] { fNamePr, lNamePr, addPr, phonePr, emailPr};
+		
+		for(JLabel current: labels){
+			current.setForeground(Color.white);
+			current.setFont(new Font("SansSerif", Font.BOLD, 12));
+			left.add(current);
+		}
 
 		pane.add(left, BorderLayout.WEST);
 
@@ -120,11 +122,13 @@ public class ContactEditingDlg extends JDialog {
 		phone= new JTextField(contact.getPhone());
 		email= new JTextField(contact.getEmail());
 
-		right.add(fName);
-		right.add(lName);
-		right.add(address);
-		right.add(phone);
-		right.add(email);
+		JTextField[] fields = new JTextField[] { fName, lName, address, phone, email};
+		
+		for(JTextField current: fields){
+			current.setForeground(new Color(3, 28, 120));
+			current.setFont(new Font("SansSerif", Font.BOLD, 12));
+			right.add(current);
+		}
 
 		fNamePr.setLabelFor(fName);
 
@@ -136,7 +140,10 @@ public class ContactEditingDlg extends JDialog {
 	void makeButtons(Container pane, Contact c){
 		
 		CEDSave = new JButton("Save");
-		CEDCancel = new JButton("Cancel");		
+		CEDCancel = new JButton("Cancel");	
+		CEDSave.setForeground(new Color(3, 28, 120));
+		CEDCancel.setForeground(new Color(3, 28, 120));
+		
 		final Contact toSave;
 		if(c==null){
 			toSave = new Contact();			

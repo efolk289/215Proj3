@@ -16,8 +16,9 @@ public class SystemInformationDlg extends JDialog{
 	SystemInformationDlg(){
 		
 		setModal(true);
-		setSize(new Dimension(500,400));
-		setBackground(Color.white);
+		setSize(new Dimension(600,400));
+		setMaximumSize(new Dimension(600, 400));
+		setBackground(new Color(3, 28, 120));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		//set icon
@@ -29,7 +30,9 @@ public class SystemInformationDlg extends JDialog{
 				"Designed in Eclipse Juno on OSX 10.8 and Windows 7\n" +
 				"");
 		about.setEditable(false);
-		about.setForeground(new Color(3,28,120));
+		about.setBackground(new Color(3, 28, 120));
+		about.setForeground(Color.white);
+		about.setFont(new Font("SansSerif", Font.BOLD, 14));
 
 		add(about);
 		
