@@ -8,6 +8,8 @@ import javax.swing.table.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //import java.awt.event.MouseListener;
@@ -57,21 +59,30 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(new Dimension(1000,800));
 		setMaximumSize(new Dimension(1000, 800));
-		//setSize(new Dimension(100,100));
 		
 		createMenus();
-		
-		createConfig();
 		
 		ContactTableModel CTM = new ContactTableModel();
 		createFrame(CTM);
 		
 	}
+	
+	//Save the contact data upon program exit
+		public static void saveAndClose(){
+			try {
+				DataStore.saveContact();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				DataStore.saveConfiguration(DataStore.getConfig().getEmail(), 
+											DataStore.getConfig().getSMTP());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	public void createMenus(){
-
-		UIManager.put("menubar.selectionBackground", Color.black);
-		UIManager.put("Menu.selectionForeground",Color.white);
 		
 		//create top menu
 		menubar = new JMenuBar();
@@ -126,17 +137,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		menubar.add(confiMenu);
 		menubar.add(helpMenu);
 		menubar.setForeground(Color.white);
+		
 		//set jframe menubar, 
 		setJMenuBar(menubar);
 				
 	}
 	
-	public void createConfig(){
-		
-		DataStore DS = DataStore.getInstance();
-		
-		DS.setConfig("blah@user.net", "smtp.gmail.com");
-	}
+
 	
 	public void createFrame(TableModel CTM){
 		//TableModel ContactModel = new TableModel();
@@ -178,7 +185,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		 //JTable mainContacts = new JTable(CV, DS.ColNames);
 		mainContacts = new JTable(CTM);
 		//((ContactTableModel) CTM).setColumnIdentifiers(DS.ColNames);
-		mainContacts.setGridColor(Color.black);
+		mainContacts.setGridColor(new Color(3, 28, 120));
+		mainContacts.setForeground(new Color(3, 28, 120));
 		mainContacts.setRowSelectionAllowed(true);
 		
 		String[] hdr = {"First Name",
@@ -197,7 +205,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		pane.add(mainContacts);
 		JScrollPane scrollPane = new JScrollPane(mainContacts);
 		mainContacts.setFillsViewportHeight(true);
-		mainContacts.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		//mainContacts.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setVerticalScrollBarPolicy  (JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy  (JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
@@ -320,9 +328,64 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		
 	}
+	
+	public static void checkPaths(){
+		File ContactPath = new File(DataStore.dir);
+		File ConfigFile = new File(DataStore.cfgP);
+		File ContactFile = new File(DataStore.Cpath);
+		
+		boolean exists = ContactPath.exists();
+		if(!exists){
+			try{
+				exists = ContactPath.mkdir();
+				
+			}catch(SecurityException Se){
+				System.out.println("Data directory creation failed");
+			}
+		}
+		exists = ContactFile.exists();
+		if(!exists){
+			try{
+				exists = ContactFile.createNewFile();
+				
+			}catch(SecurityException Se){
+				System.out.println("Contact File creation failed");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		exists = ConfigFile.exists();
+		if(!exists){
+			try{
+				exists = ConfigFile.createNewFile();
+				
+			}catch(SecurityException Se){
+				System.out.println("Configuration File creation failed");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	public static void main(String[] args) {
+		checkPaths();
+
+		try {
+			DataStore.loadContacts();
+			DataStore.loadConfiguration();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		MainFrame myFrame = new MainFrame("TigerMail v1");
 		myFrame.setVisible(true);
+		
+		/* save the data on program exit */
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+		    public void run() {
+		    	saveAndClose();
+		    }
+		}));
 
 	}
 

@@ -63,6 +63,10 @@ public class EmailTransmissionDlg extends JDialog{
 		final JComboBox adrLst = new JComboBox(emailAddresses.toArray()); 
 		//adrLst.setSelectedIndex(0);
 		adrLst.setEditable(false);
+		
+		email.setForeground(new Color(3, 28, 120));
+		ject.setForeground(new Color(3, 28, 120));
+		adrLst.setForeground(new Color(3, 28, 120));
 
 		JPanel nfo = new JPanel();
       //  SpringLayout spng = new SpringLayout();
@@ -118,6 +122,7 @@ public class EmailTransmissionDlg extends JDialog{
 					
 					Transport.send(msg);
 				    System.out.println("Message sent.");
+				    dispose();
 					
 				} catch(Exception exc) {
 					System.out.println("Exception: " + exc);

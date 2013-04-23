@@ -27,17 +27,14 @@ public class SystemInformationDlg extends JDialog{
 		
 		JTextArea about = new JTextArea(
 				"An email client designed by Ellen Folk and Devin Burnes for CPSC 215 002.\n" +
-				"Designed in Eclipse Juno on OSX 10.8 and Windows 7\n" +
-				"");
+				"Designed in Eclipse Juno on OSX 10.8 and Windows 7\n");
 		about.setEditable(false);
 		about.setBackground(new Color(3, 28, 120));
 		about.setForeground(Color.white);
 		about.setFont(new Font("SansSerif", Font.BOLD, 14));
-
+		
 		add(about);
-		
-		
-		
+				
 		setVisible(true);
 		
 	}
